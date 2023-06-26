@@ -1,6 +1,3 @@
 
 def a():
-    if x:
-        return x
-    else:
-        return y
+    return x if x else y

@@ -11,8 +11,7 @@ from pathlib import Path
 
 elem = str(Path.cwd() / "src")
 
-dirstack = []
-dirstack.append(Path.cwd())
+dirstack = [Path.cwd()]
 os.chdir(Path("src"))
 
 try:
@@ -26,11 +25,10 @@ finally:
 
  
 def get_compiled_binary(fp):
-    if sys.version_info >= (3, 4):
-        return importlib.util.cache_from_source(fp)
-    else:
-        import imp
-        return imp.cache_from_source(fp)
+  if sys.version_info >= (3, 4):
+    return importlib.util.cache_from_source(fp)
+  import imp
+  return imp.cache_from_source(fp)
 
 
 def roundtrip_test(fp: str) -> (str, str):
@@ -72,21 +70,21 @@ def make_roundtrip_test(fp,use_trace=True):
 
 
 def make_tests_from_folder(test_dir, test_class):
-    tps = []
-    for root, dirs, files in os.walk(test_dir):
-        for filename in fnmatch.filter(files, '*.py'):
-            full_path = os.path.join(root, filename)
-            if full_path == __file__:
-                continue
-            test = make_roundtrip_test(full_path)
-            test_name = filename.replace('.py', '')
-            r = list(filter(None, root.replace(test_dir, '').split(os.sep)))
-            prefix = 'test_'
-            if any(r):
-                test_name = str.join('_', r) + '_' + test_name
-            if not test_name[:len(prefix)] == prefix:
-                test_name = prefix + test_name
-            setattr(test_class,test_name,test)
+  tps = []
+  for root, dirs, files in os.walk(test_dir):
+    for filename in fnmatch.filter(files, '*.py'):
+      full_path = os.path.join(root, filename)
+      if full_path == __file__:
+          continue
+      test = make_roundtrip_test(full_path)
+      test_name = filename.replace('.py', '')
+      r = list(filter(None, root.replace(test_dir, '').split(os.sep)))
+      prefix = 'test_'
+      if any(r):
+          test_name = str.join('_', r) + '_' + test_name
+      if test_name[:len(prefix)] != prefix:
+        test_name = prefix + test_name
+      setattr(test_class,test_name,test)
 
 
 def make_decompile_test(full_path,trace_failure=True):
@@ -111,13 +109,13 @@ def make_decompile_test(full_path,trace_failure=True):
 
 
 def add_decompile_test_to_fixture(full_path, root, fixture,trace_failure=True):
-    relative_path = full_path.replace(root, '').lstrip(os.path.sep)
-    test = make_decompile_test(full_path,trace_failure)
-    test_name = relative_path.replace(os.path.sep, '_').replace('.cpython-37', '').replace('.pyc', '')
-    prefix = 'test_'
-    if not test_name[:len(prefix)] == prefix:
-        test_name = prefix + test_name
-    setattr(fixture, test_name, test)
+  relative_path = full_path.replace(root, '').lstrip(os.path.sep)
+  test = make_decompile_test(full_path,trace_failure)
+  test_name = relative_path.replace(os.path.sep, '_').replace('.cpython-37', '').replace('.pyc', '')
+  prefix = 'test_'
+  if test_name[:len(prefix)] != prefix:
+    test_name = prefix + test_name
+  setattr(fixture, test_name, test)
     
 for p in reversed(dirstack):
   os.chdir(p)

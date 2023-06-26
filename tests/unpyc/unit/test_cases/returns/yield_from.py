@@ -1,4 +1,4 @@
 
 def f():
-    for a in range(10):
+    for _ in range(10):
         yield from b()

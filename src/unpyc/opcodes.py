@@ -68,10 +68,7 @@ class Opcode(object):
 
     def __str__(self):
         if self.type_comment:
-            return "%s  # type: %s" % (
-                self.basic_str(),
-                self.type_comment,
-            )
+            return f"{self.basic_str()}  # type: {self.type_comment}"
         else:
             return self.basic_str()
 
@@ -162,11 +159,8 @@ class OpcodeWithArg(Opcode):
         self.pretty_arg = pretty_arg
 
     def __str__(self):
-        out = "%s %s" % (self.basic_str(), self.pretty_arg)
-        if self.type_comment:
-            return "%s  # type: %s" % (out, self.type_comment)
-        else:
-            return out
+        out = f"{self.basic_str()} {self.pretty_arg}"
+        return f"{out}  # type: {self.type_comment}" if self.type_comment else out
 
     @classmethod
     def has_arg(cls):
@@ -1102,9 +1096,7 @@ python3_mapping = {
 def _overlay_mapping(mapping, new_entries):
     ret = mapping.copy()
     ret.update(new_entries)
-    return dict(
-        (k, v) for k, v in six.iteritems(ret) if v is not None
-    )
+    return {k: v for k, v in six.iteritems(ret) if v is not None}
 
 
 python_3_5_mapping = _overlay_mapping(
@@ -1310,11 +1302,7 @@ def _dis(
     for pos, end_pos, cls, oparg in reader(data, mapping):
         index = len(code)
         offset_to_index[pos] = index
-        if lp:
-            line = lp.get(pos)
-        else:
-            # single line programs don't have co_lnotab
-            line = co_firstlineno
+        line = lp.get(pos) if lp else co_firstlineno
         if oparg is not None:
             if cls.has_jrel():
                 oparg += end_pos
