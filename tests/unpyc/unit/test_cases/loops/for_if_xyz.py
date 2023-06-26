@@ -1,3 +1,3 @@
-for a in b:
+for _ in b:
     if x <= y <= z:
         print(x)

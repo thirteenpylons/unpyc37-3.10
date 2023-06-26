@@ -1,4 +1,4 @@
-for x in y:
+for _ in y:
     if a:
         for r in t:
             print(r)

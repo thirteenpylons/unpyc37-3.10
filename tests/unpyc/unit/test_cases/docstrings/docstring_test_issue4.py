@@ -2,12 +2,10 @@
 
 def foo():
     'func placeholder - \' and with ("""\\nstring\\n""")'
-    pass
 
 
 def bar():
     'func placeholder - \' and with (\'\'\'\\nstring\\n\'\'\') and \\"\\"\\"\\nstring\\n\\"\\"\\" '
-    pass
 
 
 def baz():

@@ -1,27 +1,27 @@
 
 class TestClass:
 
-    def test_func1(x):
-        x = x*(f(x) + 1 - x[1])
-        x = (y, [z, t]), {1, 2, 3}
-        t = {1:[x, y], 3:'x'}
+    def test_func1(self):
+        self = self * (f(self) + 1 - self[1])
+        self = (y, [z, t]), {1, 2, 3}
+        t = {1: [self, y], 3: 'x'}
         a.x.y, b[2] = b, a
-        t = 1 <= x < 2 < y
-        g(x, y + 1, x=12)
-        x = a and (b or c)
-        y = 1 if x else 2
-        z = 1 if not x else 2
+        t = 1 <= self < 2 < y
+        g(self, y + 1, self=12)
+        self = a and (b or c)
+        y = 1 if self else 2
+        z = 1 if not self else 2
         a = b = 3
-        x[y.z] = a, b = u
-        if x:
-            f(x)
-            del x
+        self[y.z] = a, b = u
+        if self:
+            f(self)
+            del self
         else:
-            g(x)
+            g(self)
             h[y] = 3
         if y:
             foo()
-        if x:
+        if self:
             a()
             if z:
                 a1()
@@ -32,7 +32,7 @@ class TestClass:
             b()
         else:
             c()
-        x = a and b or c
+        self = a and b or c
         return "hello"
     def test_func2():
         if a and ((b and c and d) or e or f) and g: g()
@@ -48,37 +48,36 @@ class TestClass:
         def f(x, y=2):
             return x + y if x else x - y
         g = lambda x: x + 1
-    def test_func5(x):
-        x += 2
-        x[3] *= 10
-    def test_func6(x):
-        while f(x):
-            if x and y:
-                g(x)
+    def test_func5(self):
+        self += 2
+        self[3] *= 10
+    def test_func6(self):
+        while f(self):
+            if self and y:
+                g(self)
             else:
-                x + 2
-            x += f(x, y=2)
+                self + 2
+            self += f(self, y=2)
         while a and b:
             while c and d:
                 print(a, c)
-    def test_func7(x):
-        for i in x:
+    def test_func7(self):
+        for i in self:
             print(i)
-        for a, b in x:
+        for a, b in self:
             for c, (d, e) in a:
                 print(a + c)
-    def test_func8(x):
-        for i in x:
+    def test_func8(self):
+        for i in self:
             if i == 2:
                 f()
             else:
                 g()
-        for i in x:
+        for i in self:
             if i:
                 break
-        while x:
-            if x:
-                f()
+        while self:
+            f()
     def test_func9():
         try:
             x = 1
@@ -99,8 +98,8 @@ class TestClass:
             bar()
         finally:
             frobn()
-    def test_func10(fname):
-        with open(fname) as f:
+    def test_func10(self):
+        with open(self) as f:
             for line in f:
                 print(line)
         with x as y, s as t:
@@ -109,7 +108,7 @@ class TestClass:
         l = [x for x in y for z in x]
         l1 = [x for x in y if f(x)]
         s = {x + 1 for x, y in T}
-        d = {x: y for x, y in f(a)}
+        d = dict(f(a))
     def test_func12():
         class A:
             def f(self): return 1
@@ -118,7 +117,7 @@ class TestClass:
             def __init__(self, x):
                 self.x = x
     def test_func13():
-        g = (x for x in y)
+        g = iter(y)
         f(y - 2 for x in S for y in f(x))
     def test_func14():
         def g(x):
@@ -183,12 +182,9 @@ class TestClass:
             
     def test_func25():
         c = 2
+        c = 1
         while not 1:
-            if a:
-                break
-            if b:
-                continue
-            c = 1
+            pass
 
     def test_func26():
         c = 2
@@ -215,10 +211,7 @@ class TestClass:
                 break
             if b:
                 continue
-            if c == '\b':
-                pw = pw[:-1]
-            else:
-                pw = pw + c                
+            pw = pw[:-1] if c == '\b' else pw + c                
             #c = 1
             
     def test_func29():
@@ -228,10 +221,7 @@ class TestClass:
                 break
             if b:
                 continue
-            if c == '\b':
-                pw = pw[:-1]
-            else:
-                pw = pw + c                
+            pw = pw[:-1] if c == '\b' else pw + c
             c = 1
             
     def test_func30():
